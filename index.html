@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AhorrAdas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/fdf6782f0a.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
+        integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
+        integrity="sha512-01CJ9/g7e8cUmY0DFTMcUw/ikS799FHiOA0eyHsUWfOetgbx/t6oV4otQ5zXKQyIrQGTHSmRVPIgrgLcZi/WMA=="
+        crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar has-shadow is-spaced is-primary" role="navigation" aria-label="main navigation">
+
+            <div class="navbar-brand">
+                <a href="" class="navbar-item">
+                    <h1 class="title is-size-2-desktop is-size-3 has-text-white">
+                        <i class="fas fa-wallet mr-2" aria-hidden="true"></i>
+                        AhorrAdas</h1>
+                </a>
+
+                <div class="navbar-burger burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" id="show-balance">
+                        <i class="fas fa-chart-line mr-2" aria-hidden="true"></i>
+                        Balance
+                    </a>
+                    <a class="navbar-item" id="show-categories">
+                        <i class="fas fa-tag mr-2" aria-hidden="true"></i>
+                        Categorias
+                    </a>
+                    <a class="navbar-item" id="show-report">
+                        <i class="fas fa-chart-pie mr-2" aria-hidden="true"></i>
+                        Reportes
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- COMIENZO SECCION BALANCE -->
+
+    <section class="section mt-5 vision section-balance">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-3">
+                    <div class="box">
+                        <h3 class="title is-3">Balance</h3>
+                        <div class="columns is-vcentered">
+                            <div class="column is-4">
+                                <p class="is-size-5 my-5">Ganancias</p>
+                            </div>
+                            <div class="column is-8 has-text-right">
+                                <p class="has-text-right has-text-success">$90000</p>
+                            </div>
+
+                        </div>
+                        <div class="columns is-vcentered">
+                            <div class="column is-4">
+                                <p class="is-size-5 my-5">Gastos</p>
+                            </div>
+                            <div class="column is-8 has-text-right">
+                                <p class="has-text-right has-text-danger">$1040</p>
+                            </div>
+
+                        </div>
+                        <div class="columns is-vcentered">
+                            <div class="column is-4">
+                                <p class="is-size-4 my-5">Total</p>
+                            </div>
+                            <div class="column is-8 has-text-right">
+                                <p class="has-text-right has-text-weight-bold">$89060</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="box">
+                        <div class="columns is-mobile is-vcentered">
+                            <div class="column">
+                                <h3 class="title is-3">Filtros</h3>
+                            </div>
+                            <div class="column has-text-right">
+                                <a href="#" id="">Ocultar filtros</a>
+                            </div>
+                        </div>
+                        <div id="flitros">
+                            <div class="field">
+                                <label class="label" for="type-filter">Tipo</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select id="type-filter">
+                                            <option value="TODOS">Todos</option>
+                                            <option value="GASTO">Gasto</option>
+                                            <option value="GANANCIA">Ganancia</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label" for="caterogy-filter">Categoría</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select class="category-filter categories-selecy" id="filter-category">
+                                            <option value="TODAS">Todas</option>
+                                            <option value="COMIDA">Comida</option>
+                                            <option value="SERVICIOS">Servicios</option>
+                                            <option value="SALIDAS">Salidas</option>
+                                            <option value="EDUCACIÓN">Educación</option>
+                                            <option value="TRANSPORTE">Transporte</option>
+                                            <option value="TRABAJO">Trabajo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="field">
+                                <label class="label" for="caterogy-filter">Desde</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <input class="input" type="date" name id="date-filter">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="field">
+                                <label class="label" for="caterogy-filter">Ordenar por</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select id="order-filter">
+                                            <option value="MAS-RECIENTES">Más recientes</option>
+                                            <option value="MENOS-RECIENTES">Menos recientes</option>
+                                            <option value="MAYOR-MONTO">Mayor monto</option>
+                                            <option value="MENOR-MONTO">Menor monto</option>
+                                            <option value="A/Z">A/Z</option>
+                                            <option value="Z/A">Z/A</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="column is-7-widescreen is--desktop">
+                    <div class="box container-operation">
+                        <div class="columns mb-4">
+                            <div class="column">
+                                <h3 class="is-size-4 has-text-weight-bold">Operaciones</h3>
+                            </div>
+                            <div class="column has-text-right-tablet">
+                                <button type="button" class="button is-primary" id="shown-operations"> + Nueva
+                                    operación</button>
+                            </div>
+                        </div>
+
+                        <div id="" class="is-hidden">
+                            <div class="columns has-text-weight-semibold is-hidden-mobile">
+                                <div class="column is-3">Descripción</div>
+                                <div class="column is-3">Categoría</div>
+                                <div class="column is-2 has-text-right">Fecha</div>
+                                <div class="column is-2 has-text-right">Monto</div>
+                                <div class="column is-2 has-text-right">Acciones</div>
+                            </div>
+                            <div id="operations">
+                                <div class="mb-3">
+                                    <div class="columns is-multiline is-mobile is-vcentered">
+                                        <div class="column is-3-tablet is-6-mobile"></div>
+                                        <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
+                                            <span class="tag is-primary is-light">Trabajo</span>
+                                        </div>
+
+                                        <div
+                                            class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet">
+                                            4/9/2021</div>
+                                        <div
+                                            class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success">
+                                            +$4800000</div>
+                                        <div class="column is-2-tablet is-6-mobile has-text-right">
+                                            <p class="is-fullwidth">
+                                                <a href="#" class="mr-3 is-size-7 edit-link">Editar</a>
+                                                <a href="#" class="is-size-7 delete-link">Eliminar</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-6 py-6" id="none-operations">
+                            <figure class="image">
+                                <img src="img/undraw_transfer_money_rywa.svg" alt="">
+                            </figure>
+                            <h4 class="is-size-4 has-text-centered mt-6 mb-4 has-text-weight-semibold"> Sin resultados
+                            </h4>
+                            <p class="has-text-centered"> Cambia los filtros o agrega operaciones</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- FIN SECCION BALANCE -->
+
+
+
+
+<!-- COMIENZO SECCION CATEGORIAS -->
+
+
+
+    <section class="section mt-5 vista section-categories is-hidden" id="show-category">
+        <div class="container">
+            <div class="columns is-multiline">
+                <div class="column is-8-widescreen is-10-desktop if-offset-2-widescreen is-offset-1-desktop">
+                    <div class="box">
+                        <h2 class="title is-size-2 has-text-weight-bold">Categorías</h2>
+                        <label class="label mt-6" for="category-input">Nombre</label>
+                        <div class="field is-grouped">
+                            <div class="control is-expanded">
+                                <input class="input" type="text" name id="category-input">
+                            </div>
+                            <div class="control">
+                                <button class="button is-success" id="add-category-button">Agregar</button>
+                            </div>
+                        </div>
+                        <div class="mt-6" id="categories">
+                            <div class="mb-3">
+                                <div class="columns is-vcentered is-mobile">
+                                    <div class="column">
+                                        <span class="tag is-primary is-light">Comida</span>
+                                    </div>
+                                    <div class="column is-narrow has-text">
+                                        <p>
+                                            <a href="#" class="mr-4 is-size-7 edit-link">Editar</a>
+                                            <a href="#" class="is-size-7 delete-link">Eliminar</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="columns is-vcentered is-mobile">
+                                    <div class="column">
+                                        <span class="tag is-primary is-light">Servicios</span>
+                                    </div>
+                                    <div class="column is-narrow has-text">
+                                        <p>
+                                            <a href="#" class="mr-4 is-size-7 edit-link">Editar</a>
+                                            <a href="#" class="is-size-7 delete-link">Eliminar</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="columns is-vcentered is-mobile">
+                                    <div class="column">
+                                        <span class="tag is-primary is-light">Salidas</span>
+                                    </div>
+                                    <div class="column is-narrow has-text">
+                                        <p>
+                                            <a href="#" class="mr-4 is-size-7 edit-link">Editar</a>
+                                            <a href="#" class="is-size-7 delete-link">Eliminar</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="columns is-vcentered is-mobile">
+                                    <div class="column">
+                                        <span class="tag is-primary is-light">Educación</span>
+                                    </div>
+                                    <div class="column is-narrow has-text">
+                                        <p>
+                                            <a href="#" class="mr-4 is-size-7 edit-link">Editar</a>
+                                            <a href="#" class="is-size-7 delete-link">Eliminar</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="columns is-vcentered is-mobile">
+                                    <div class="column">
+                                        <span class="tag is-primary is-light">Transporte</span>
+                                    </div>
+                                    <div class="column is-narrow has-text">
+                                        <p>
+                                            <a href="#" class="mr-4 is-size-7 edit-link">Editar</a>
+                                            <a href="#" class="is-size-7 delete-link">Eliminar</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="columns is-vcentered is-mobile">
+                                    <div class="column">
+                                        <span class="tag is-primary is-light">Trabajo</span>
+                                    </div>
+                                    <div class="column is-narrow has-text">
+                                        <p>
+                                            <a href="#" class="mr-4 is-size-7 edit-link">Editar</a>
+                                            <a href="#" class="is-size-7 delete-link">Eliminar</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FIN SECCION CATEGORIAS -->
+
+
+    <!-- COMIENZO SECCION REPORTES -->
+
+    <section class="section mt-5 vista section-reports is-hidden" id="show-reports">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-widescreen is-10-desktop is-offset-2-widescreen is-offset-1-desktop">
+                    <div  class="box">
+                        <h2 class="title has-text-weight-bold pb-2">Reportes</h2>
+                        <div id="none-reports">
+                            <div class="my-6 py-6">
+                                <figure class="image">
+                                    <img src="img/undraw_Statistics_re_kox4.svg" alt="imagen ilustrativa de dos personas haciendo reportes financieros">
+                                </figure>
+                                <h4 class="is-size-4 has-text-centered mt-6 mb-4 has-text-weight-semibold">Operaciones insuficientes</h4>
+                                <p class="has-text-centered"> Prueba agregando más operaciones</p>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+    <script src="index.js"></script>
+</body>
+
+</html>
