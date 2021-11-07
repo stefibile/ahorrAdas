@@ -53,6 +53,23 @@ showOperation.onclick = () => {
     hideSection(sectionReports)
 }
 
+// MOSTRAR U OCULTAR FILTROS 
+
+
+const filterLabel = document.querySelector ("#filter-label")
+
+const filters = document.querySelector ("#filters")
+
+filterLabel.onclick = () => {
+    filters.classList.toggle("is-hidden")
+    if (filters.classList.contains("is-hidden")) {
+        return filterLabel.innerHTML = "Mostrar filtros"
+    }
+    else {
+        return filterLabel.innerHTML = "Ocultar filtros"
+    }
+}
+
 
 
 
