@@ -47,7 +47,7 @@
                         <i class="fas fa-tag mr-2" aria-hidden="true"></i>
                         Categorias
                     </a>
-                    <a class="navbar-item" id="show-report">
+                    <a class="navbar-item" id="show-reports">
                         <i class="fas fa-chart-pie mr-2" aria-hidden="true"></i>
                         Reportes
                     </a>
@@ -57,8 +57,7 @@
     </header>
 
     <!-- COMIENZO SECCION BALANCE -->
-
-    <section class="section mt-5 vision section-balance">
+    <section class="section mt-5 vision" id="section-balance">
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-3">
@@ -137,7 +136,7 @@
                             <div class="field">
                                 <label class="label" for="caterogy-filter">Desde</label>
                                 <div class="control">
-                                    <div class="select is-fullwidth">
+                                    <div class="is-fullwidth">
                                         <input class="input" type="date" name id="date-filter">
                                     </div>
                                 </div>
@@ -174,7 +173,7 @@
                                 <h3 class="is-size-4 has-text-weight-bold">Operaciones</h3>
                             </div>
                             <div class="column has-text-right-tablet">
-                                <button type="button" class="button is-primary" id="shown-operations"> + Nueva
+                                <button type="button" class="button is-primary" id="show-operation"> + Nueva
                                     operación</button>
                             </div>
                         </div>
@@ -230,14 +229,8 @@
     </section>
     <!-- FIN SECCION BALANCE -->
 
-
-
-
-<!-- COMIENZO SECCION CATEGORIAS -->
-
-
-
-    <section class="section mt-5 vista section-categories is-hidden" id="show-category">
+    <!-- COMIENZO SECCION CATEGORIAS -->
+    <section class="section mt-5 vista is-hidden" id="section-categories">
         <div class="container">
             <div class="columns is-multiline">
                 <div class="column is-8-widescreen is-10-desktop if-offset-2-widescreen is-offset-1-desktop">
@@ -348,29 +341,111 @@
 
 
     <!-- COMIENZO SECCION REPORTES -->
-
-    <section class="section mt-5 vista section-reports is-hidden" id="show-reports">
+    <section class="section mt-5 vista is-hidden" id="section-reports">
         <div class="container">
             <div class="columns">
                 <div class="column is-8-widescreen is-10-desktop is-offset-2-widescreen is-offset-1-desktop">
-                    <div  class="box">
+                    <div class="box">
                         <h2 class="title has-text-weight-bold pb-2">Reportes</h2>
                         <div id="none-reports">
                             <div class="my-6 py-6">
                                 <figure class="image">
-                                    <img src="img/undraw_Statistics_re_kox4.svg" alt="imagen ilustrativa de dos personas haciendo reportes financieros">
+                                    <img src="img/undraw_Statistics_re_kox4.svg"
+                                        alt="imagen ilustrativa de dos personas haciendo reportes financieros">
                                 </figure>
-                                <h4 class="is-size-4 has-text-centered mt-6 mb-4 has-text-weight-semibold">Operaciones insuficientes</h4>
+                                <h4 class="is-size-4 has-text-centered mt-6 mb-4 has-text-weight-semibold">Operaciones
+                                    insuficientes</h4>
                                 <p class="has-text-centered"> Prueba agregando más operaciones</p>
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- FIN SECCION REPORTES -->
+
+    <!-- COMIENZO SECCION NUEVA OPERACION -->
+    <section class="section mt-5 vista is-hidden" id="section-operation">
+        <div class="container">
+            <div class="columns is-multiline">
+                <div class="column is 8-widescreen is-10-desktop is-offset-2-widescreen is-offset-1-desktop">
+                    <div class="box">
+                        <h2 class="title is-size-2 has-text-weight-bold"> Nueva operación</h2>
+                        <div class="field mt-6">
+                            <label class="label" for="description-input">Descripción</label>
+                            <div class="control">
+                                <div class="is--fullwidht">
+                                    <input class="input" type="text" name id="description-input">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="field">
+                            <label class="label" for="monto-input">Monto</label>
+                            <div class="control">
+                                <div class="control">
+                                    <div class="is-fullwidth">
+                                        <input class="input" type="number" name id="monto-input" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="select-type">Tipo</label>
+
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select name="" id="tipo-operacion">
+                                        <option value="gasto">Gasto</option>
+                                        <option value="ganancia">Ganancia</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="categories-select">Categorias</label>
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select class="categories-select" name="" id="categories-select">
+                                        <option value="comida">Comida</option>
+                                        <option value="salidas">Salidas</option>
+                                        <option value="trabajo">Trabajo</option>
+                                        <option value="transporte">Transporte</option>
+                                        <option value="educacion">Educación</option>
+                                        <option value="servicios">Servicios</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="date-input">Fecha</label>
+                            <div class="control">
+                                <div class="is-fullwidth">
+                                    <input class="input" type="date" name id="date-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons mt-6 is-justify-content-flex-end">
+                            <button class="button is-light" id="cancelar-agregar-operaciones-boton"> Cancelar </button>
+                            <button class="button is-success" id="agregar-operaciones-boton"> Agregar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- FIN SECCION NUEVA OPERACION -->
+
+
+
+
+
 
 
 
