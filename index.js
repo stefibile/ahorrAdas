@@ -94,7 +94,7 @@ addOperationButton.onclick = () => {
   aggregateOperations.classList.remove("is-hidden");
   noneOperations.classList.add("is-hidden");
 
-  const description = inputDescription.value;
+  let description = inputDescription.value;
   const monto = inputMonto.value;
   const tipo =
     selectTypeOperation.options[selectTypeOperation.selectedIndex].value;
@@ -111,49 +111,65 @@ addOperationButton.onclick = () => {
   };
 
   newOperation.push(elementosForm);
-};
-
+  
 // Convertir newOperation a un JSON
-
 const convertirAJSON = (objeto) => {
   return JSON.stringify(objeto);
 };
 
 // Guardar newOperation en localStorage
-
 const guardarEnLocalStorage = (objetoJavascript, clave) => {
   return localStorage.setItem(clave, convertirAJSON(objetoJavascript));
 };
 
 // Leer localStorage
-
 const leerDesdeLocalStorage = (clave) => {
   return convertirDesdeJSON(localStorage.getItem(clave));
 };
 
 // Convertirlo a JS
-
 const convertirDesdeJSON = (objetoJSON) => {
   return JSON.parse(objetoJSON);
 };
 
 const newOperationJSON = convertirAJSON(newOperation);
+
 guardarEnLocalStorage(newOperation, "operaciones");
 convertirDesdeJSON(newOperationJSON);
 leerDesdeLocalStorage("operaciones");
 convertirDesdeJSON(newOperationJSON);
 
 
+const operations = document.querySelector("#operations")
 
-// Convertirlo a HTML
+let acc = ""
 
-const descriptionNewOperation = document.querySelector("#description")
-const categoriesNewOperation = document.querySelector("#categories")
-const dateNewOperation = document.querySelector("#date")
-const montoNewOperation = document.querySelector("#monto")
+for (let index = 0; index < newOperation.length; index++) {
+  acc += `<div class="mb-3">
+  <div class="columns is-multiline is-mobile is-vcentered">
+      <div id="description" class="column is-3-tablet is-6-mobile">${newOperation[index].descripcion}</div>
+      <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
+          <span id="categories" class="tag is-primary is-light">${newOperation[index].categoria}</span>
+      </div>
+      <div class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet"
+          id="date">
+          ${newOperation[index].fecha}</div>
+      <div class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success"
+          id="monto">
+          ${newOperation[index].monto}</div>
+      <div class="column is-2-tablet is-6-mobile has-text-right">
+          <p class="is-fullwidth">
+              <a href="#" id="boton-editar-${monto}" class="mr-3 is-size-7 edit-link">Editar</a>
+              <a href="#" id="boton-eliminar-${monto}" class="is-size-7 delete-link">Eliminar</a>
+          </p>
+      </div>
+  </div>
+</div>`
 
+}
+operations.innerHTML = acc
 
-
+};
 
 // MOSTRAR U OCULTAR FILTROS
 
