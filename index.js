@@ -111,65 +111,69 @@ addOperationButton.onclick = () => {
   };
 
   newOperation.push(elementosForm);
-  
-// Convertir newOperation a un JSON
-const convertirAJSON = (objeto) => {
-  return JSON.stringify(objeto);
-};
 
-// Guardar newOperation en localStorage
-const guardarEnLocalStorage = (objetoJavascript, clave) => {
-  return localStorage.setItem(clave, convertirAJSON(objetoJavascript));
-};
+  // Convertir newOperation a un JSON
+  const convertirAJSON = (objeto) => {
+    return JSON.stringify(objeto);
+  };
 
-// Leer localStorage
-const leerDesdeLocalStorage = (clave) => {
-  return convertirDesdeJSON(localStorage.getItem(clave));
-};
+  // Guardar newOperation en localStorage
+  const guardarEnLocalStorage = (objetoJavascript, clave) => {
+    return localStorage.setItem(clave, convertirAJSON(objetoJavascript));
+  };
 
-// Convertirlo a JS
-const convertirDesdeJSON = (objetoJSON) => {
-  return JSON.parse(objetoJSON);
-};
+  // Leer localStorage
+  const leerDesdeLocalStorage = (clave) => {
+    return convertirDesdeJSON(localStorage.getItem(clave));
+  };
 
-const newOperationJSON = convertirAJSON(newOperation);
+  // Convertirlo a JS
+  const convertirDesdeJSON = (objetoJSON) => {
+    return JSON.parse(objetoJSON);
+  };
 
-guardarEnLocalStorage(newOperation, "operaciones");
-convertirDesdeJSON(newOperationJSON);
-leerDesdeLocalStorage("operaciones");
-convertirDesdeJSON(newOperationJSON);
+  const newOperationJSON = convertirAJSON(newOperation);
 
+  guardarEnLocalStorage(newOperation, "operaciones");
+  convertirDesdeJSON(newOperationJSON);
+  leerDesdeLocalStorage("operaciones");
+  convertirDesdeJSON(newOperationJSON);
 
-const operations = document.querySelector("#operations")
+  const operations = document.querySelector("#operations");
 
-let acc = ""
+  const mostrarOperacionesEnHTML = (array) => {
+    let acc = "";
 
-for (let index = 0; index < newOperation.length; index++) {
-  acc += `<div class="mb-3">
-  <div class="columns is-multiline is-mobile is-vcentered">
-      <div id="description" class="column is-3-tablet is-6-mobile">${newOperation[index].descripcion}</div>
-      <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
-          <span id="categories" class="tag is-primary is-light">${newOperation[index].categoria}</span>
-      </div>
-      <div class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet"
+    array.map((operacion) => {
+      acc =
+        acc +
+        `<div class="mb-3">
+        <div class="columns is-multiline is-mobile is-vcentered">
+        <div id="description" class="column is-3-tablet is-6-mobile">${operacion.descripcion}</div>
+        <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
+          <span id="categories" class="tag is-primary is-light">${operacion.categoria}</span>
+        </div>
+        <div class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet"
           id="date">
-          ${newOperation[index].fecha}</div>
-      <div class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success"
+          ${operacion.fecha}</div>
+        <div class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success"
           id="monto">
-          ${newOperation[index].monto}</div>
-      <div class="column is-2-tablet is-6-mobile has-text-right">
+          ${operacion.monto}</div>
+        <div class="column is-2-tablet is-6-mobile has-text-right">
           <p class="is-fullwidth">
               <a href="#" id="boton-editar-${monto}" class="mr-3 is-size-7 edit-link">Editar</a>
               <a href="#" id="boton-eliminar-${monto}" class="is-size-7 delete-link">Eliminar</a>
           </p>
       </div>
   </div>
-</div>`
-
-}
-operations.innerHTML = acc
-
+  </div>
+    `;
+    });
+    operations.innerHTML = acc;
+  };
 };
+
+mostrarOperacionesEnHTML(newOperation);
 
 // MOSTRAR U OCULTAR FILTROS
 
