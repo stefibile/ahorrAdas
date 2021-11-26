@@ -171,9 +171,8 @@ addOperationButton.onclick = () => {
     });
     operations.innerHTML = acc;
   };
+  mostrarOperacionesEnHTML(newOperation);
 };
-
-mostrarOperacionesEnHTML(newOperation);
 
 // MOSTRAR U OCULTAR FILTROS
 
