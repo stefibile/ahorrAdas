@@ -52,21 +52,6 @@ showOperation.onclick = () => {
   hideSection(sectionReports);
 };
 
-// // MOSTRAR U OCULTAR FILTROS
-
-// const filterLabel = document.querySelector("#filter-label");
-
-// const filters = document.querySelector("#filters");
-
-// filterLabel.onclick = () => {
-//   filters.classList.toggle("is-hidden");
-//   if (filters.classList.contains("is-hidden")) {
-//     return (filterLabel.innerHTML = "Mostrar filtros");
-//   } else {
-//     return (filterLabel.innerHTML = "Ocultar filtros");
-//   }
-// };
-
 //AGREGAR LA OPERACION A LA SECCION BALANCE
 
 const addOperationButton = document.querySelector("#agregar-operaciones-boton");
@@ -81,20 +66,39 @@ const inputDate = document.querySelector("#date-input");
 const selectCategories = document.querySelector("#categories-select");
 const selectTypeOperation = document.querySelector("#tipo-operacion");
 
+// Convertir newOperation a un JSON
+const convertirAJSON = (objeto) => {
+  return JSON.stringify(objeto);
+};
+
+// Guardar newOperation en localStorage
+const guardarEnLocalStorage = (objetoJavascript, clave) => {
+  return localStorage.setItem(clave, convertirAJSON(objetoJavascript));
+};
+
+// Leer localStorage
+const leerDesdeLocalStorage = (clave) => {
+  return convertirDesdeJSON(localStorage.getItem(clave));
+};
+
+// Convertirlo a JS
+const convertirDesdeJSON = (objetoJSON) => {
+  return JSON.parse(objetoJSON);
+};
+
 cancelOperation.onclick = () => {
   sectionBalance.classList.remove("is-hidden");
   sectionOperation.classList.add("is-hidden");
 };
 
 const newOperation = [];
-
 addOperationButton.onclick = () => {
   sectionOperation.classList.add("is-hidden");
   sectionBalance.classList.remove("is-hidden");
   aggregateOperations.classList.remove("is-hidden");
   noneOperations.classList.add("is-hidden");
 
-  let description = inputDescription.value;
+  const description = inputDescription.value;
   const monto = inputMonto.value;
   const tipo =
     selectTypeOperation.options[selectTypeOperation.selectedIndex].value;
@@ -112,32 +116,19 @@ addOperationButton.onclick = () => {
 
   newOperation.push(elementosForm);
 
-  // Convertir newOperation a un JSON
-  const convertirAJSON = (objeto) => {
-    return JSON.stringify(objeto);
-  };
+  const objetNewOperationJSON = convertirAJSON(newOperation);
 
-  // Guardar newOperation en localStorage
-  const guardarEnLocalStorage = (objetoJavascript, clave) => {
-    return localStorage.setItem(clave, convertirAJSON(objetoJavascript));
-  };
+  const infoGuardadaDelObjetNewOperation = guardarEnLocalStorage(
+    objetNewOperationJSON,
+    "operaciones"
+  );
+  const infoGuardadaDelObjetNewOperationJS = convertirDesdeJSON(
+    objetNewOperationJSON
+  );
+  const datosQueExistenEnLocalStorage = leerDesdeLocalStorage("operaciones");
+  convertirDesdeJSON(objetNewOperationJSON);
 
-  // Leer localStorage
-  const leerDesdeLocalStorage = (clave) => {
-    return convertirDesdeJSON(localStorage.getItem(clave));
-  };
-
-  // Convertirlo a JS
-  const convertirDesdeJSON = (objetoJSON) => {
-    return JSON.parse(objetoJSON);
-  };
-
-  const newOperationJSON = convertirAJSON(newOperation);
-
-  guardarEnLocalStorage(newOperation, "operaciones");
-  convertirDesdeJSON(newOperationJSON);
-  leerDesdeLocalStorage("operaciones");
-  convertirDesdeJSON(newOperationJSON);
+  console.log(infoGuardadaDelObjetNewOperationJS);
 
   const operations = document.querySelector("#operations");
 
