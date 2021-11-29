@@ -363,7 +363,7 @@ const mostrarGanancias = (array) => {
 };
 mostrarGanancias(operacionesStored);
 
-// suma gastos 
+// suma gastos
 const mostrarGastos = (array) => {
   const filtroGastos = array.filter((elemento) => {
     return elemento.tipo === "gasto";
@@ -384,7 +384,108 @@ const mostrarBalanceTotal = (array) => {
   const totalGastos = mostrarGastos(array);
   const totalFinal = totalGanancias - totalGastos;
   return (balanceTotal.textContent = `$${totalFinal}`);
-}; 
-//SOLUCIONAR: NaN en total 
+};
+//SOLUCIONAR: NaN en total
 
 mostrarBalanceTotal(operacionesStored);
+
+// FILTROS
+
+const ordenarPorFechaMasReciente = (array) => {
+  return array.sort((a, b) => {
+    return new Date(a.fecha) - new Date(b.fecha);
+  });
+};
+
+const ordenarPorFechaMenosReciente = (array) => {
+  return array.sort((a, b) => {
+    return new Date(b.fecha) - new Date(a.fecha);
+  });
+};
+const ordenarPorMayorMonto = (array) => {
+  return array.sort((a, b) => {
+    return a.monto - b.monto;
+  });
+};
+
+const ordenarPorMenorMonto = (array) => {
+  return array.sort((a, b) => {
+    return b.monto - a.monto;
+  });
+};
+
+const ordenarAZ = (array) => {
+  return array.sort();
+};
+
+const ordenarZA = (array) => {
+  return array.sort().reverse();
+};
+
+const filtroOrdenarPor = (array) => {
+  if (filtrosOrdenarPor.value === "MAS-RECIENTES") {
+    return ordenarPorFechaMasReciente(array);
+  } else if (selectfiltrosOrdenarPor === "MENOS-RECIENTES") {
+    return ordenarPorFechaMenosReciente(array);
+  } else if (selectfiltrosOrdenarPor === "MAYOR-MONTO") {
+    return ordenarPorMayorMonto(array);
+  } else if (selectfiltrosOrdenarPor === "MENOR-MONTO") {
+    return ordenarPorMenorMonto(array);
+  } else if (selectfiltrosOrdenarPor === "A/Z") {
+    return ordenarAZ(array);
+  } else {
+    return ordenarZA(array);
+  }
+};
+
+const filtrosOrdenarPor = document.querySelector("#order-filter");
+const tipoFiltro = document.querySelector("#type-filter");
+const categoriaFiltro = document.querySelector("#filter-category");
+const fechaFiltro = document.querySelector("#date-filter");
+
+const aplicarFiltros = () => {
+  const filtroTipo = tipoFiltro.value;
+  const filtroPorTipo = operacionesStored.filter((operacion) => {
+    if (filtroTipo === "TODOS") {
+      return operacion;
+    }
+    return operacion.tipo === filtroTipo;
+  });
+
+  const filtroCategoria = categoriaFiltro.value;
+  const filtrarPorCategoria = filtroPorTipo.filter((operacion) => {
+    if (filtroCategoria === "TODAS") {
+      return operacion;
+    }
+    return operacion.categoria === FiltroCategoria;
+  });
+
+  const arrayFiltrarPorFechas = filtrarPorCategoria.map((operacion) => {
+    const newElement = { ...operacion };
+    newElement.fecha = new Date(operacion.fecha).toLocaleDateString();
+    return newElement;
+  });
+  return filtroOrdenarPor(arrayFiltrarPorFechas);
+};
+
+tipoFiltro.onchange = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
+
+categoriaFiltro.onchange = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
+
+fechaFiltro.oninput = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
+
+filtrosOrdenarPor.onchange = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
+
+// NO ME FUNCIONA :( 
