@@ -55,7 +55,7 @@ showOperation.onclick = () => {
 //AGREGAR LA OPERACION A LA SECCION BALANCE
 
 const addOperationButton = document.querySelector("#agregar-operaciones-boton");
-const aggregateOperations = document.querySelector("#aggregate-operations");
+const addOperations = document.querySelector("#add-operations");
 const noneOperations = document.querySelector("#none-operations");
 const cancelOperation = document.querySelector(
   "#cancelar-agregar-operaciones-boton"
@@ -91,11 +91,62 @@ cancelOperation.onclick = () => {
   sectionOperation.classList.add("is-hidden");
 };
 
-const newOperation = [];
+operaciones = ""
+
+const getOperations = () => {
+  const operationsStored = localStorage.getItem("operaciones");
+  if (operationsStored === null) {
+    return operaciones;
+  } else {
+    noneOperations.classList.add("is-hidden");
+    addOperations.classList.remove("is-hidden");
+    return JSON.parse(operationsStored);
+  }
+};
+
+operacionesStored = getOperations();
+
+const mostrarOperacionesEnHTML = (array) => {
+  const html = array.reduce((acc, e, i) => {
+    return (
+      acc +
+      `<div class="mb-3">
+      <div class="columns is-multiline is-mobile is-vcentered">
+        <div id="description" class="column is-3-tablet is-6-mobile">${e.descripcion}</div>
+          <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
+            <span id="categories" class="tag is-primary is-light">${e.categoria}</span>
+          </div>
+          <div class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet"
+            id="date">
+            ${e.fecha}</div>
+          <div class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success"
+            id="monto">
+            ${e.monto}</div>
+          <div class="column is-2-tablet is-6-mobile has-text-right">
+            <p class="is-fullwidth">
+                <a href="#" id="boton-editar-${i}" class="mr-3 is-size-7 edit-link">Editar</a>
+                <a href="#" id="boton-eliminar-${i}" class="is-size-7 delete-link">Eliminar</a>
+            </p>
+          </div>
+        </div>
+      </div>`
+    );
+  }, "");
+  const operations = document.querySelector("#operations");
+  operations.innerHTML = html;
+  // getDeleteButtons(array);
+  // getEditButtons(array);
+};
+
+mostrarOperacionesEnHTML(operacionesStored)
+
 addOperationButton.onclick = () => {
+
+  const newOperation = getOperations();
+
   sectionOperation.classList.add("is-hidden");
   sectionBalance.classList.remove("is-hidden");
-  aggregateOperations.classList.remove("is-hidden");
+  addOperations.classList.remove("is-hidden");
   noneOperations.classList.add("is-hidden");
 
   const description = inputDescription.value;
@@ -115,54 +166,11 @@ addOperationButton.onclick = () => {
   };
 
   newOperation.push(elementosForm);
-
-  const objetNewOperationJSON = convertirAJSON(newOperation);
-
-  const infoGuardadaDelObjetNewOperation = guardarEnLocalStorage(
-    objetNewOperationJSON,
-    "operaciones"
-  );
-  const infoGuardadaDelObjetNewOperationJS = convertirDesdeJSON(
-    objetNewOperationJSON
-  );
-  const datosQueExistenEnLocalStorage = leerDesdeLocalStorage("operaciones");
-  convertirDesdeJSON(objetNewOperationJSON);
-
-  console.log(infoGuardadaDelObjetNewOperationJS);
-
-  const operations = document.querySelector("#operations");
-
-  const mostrarOperacionesEnHTML = (array) => {
-    let acc = "";
-
-    array.map((operacion) => {
-      acc =
-        acc +
-        `<div class="mb-3">
-        <div class="columns is-multiline is-mobile is-vcentered">
-        <div id="description" class="column is-3-tablet is-6-mobile">${operacion.descripcion}</div>
-        <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
-          <span id="categories" class="tag is-primary is-light">${operacion.categoria}</span>
-        </div>
-        <div class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet"
-          id="date">
-          ${operacion.fecha}</div>
-        <div class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success"
-          id="monto">
-          ${operacion.monto}</div>
-        <div class="column is-2-tablet is-6-mobile has-text-right">
-          <p class="is-fullwidth">
-              <a href="#" id="boton-editar-${monto}" class="mr-3 is-size-7 edit-link">Editar</a>
-              <a href="#" id="boton-eliminar-${monto}" class="is-size-7 delete-link">Eliminar</a>
-          </p>
-      </div>
-  </div>
-  </div>
-    `;
-    });
-    operations.innerHTML = acc;
-  };
+  
   mostrarOperacionesEnHTML(newOperation);
+
+  const operationsToJSON = JSON.stringify(newOperation);
+  localStorage.setItem("operaciones", operationsToJSON);
 };
 
 // MOSTRAR U OCULTAR FILTROS
