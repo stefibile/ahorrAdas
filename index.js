@@ -91,7 +91,7 @@ cancelOperation.onclick = () => {
   sectionOperation.classList.add("is-hidden");
 };
 
-operaciones = ""
+operaciones = [];
 
 const getOperations = () => {
   const operationsStored = localStorage.getItem("operaciones");
@@ -138,10 +138,9 @@ const mostrarOperacionesEnHTML = (array) => {
   // getEditButtons(array);
 };
 
-mostrarOperacionesEnHTML(operacionesStored)
+mostrarOperacionesEnHTML(operacionesStored);
 
 addOperationButton.onclick = () => {
-
   const newOperation = getOperations();
 
   sectionOperation.classList.add("is-hidden");
@@ -166,7 +165,7 @@ addOperationButton.onclick = () => {
   };
 
   newOperation.push(elementosForm);
-  
+
   mostrarOperacionesEnHTML(newOperation);
 
   const operationsToJSON = JSON.stringify(newOperation);
@@ -342,3 +341,50 @@ addCategoryButton.onclick = () => {
 };
 
 addCategoriesToHTML(getCategories(categories));
+
+// BALANCE
+
+const ganancias = document.querySelector("#ganancias");
+const gastos = document.querySelector("#gastos");
+const balanceTotal = document.querySelector("#balance-total");
+
+// suma ganancias
+const mostrarGanancias = (array) => {
+  const filtroGanancias = array.filter((elemento) => {
+    return elemento.tipo === "ganancia";
+  });
+
+  const sumaDeGanancias = filtroGanancias.reduce((acc, elemento) => {
+    return acc + elemento.monto;
+    // SOLUCIONAR: me lo concatena, no lo toma como numero
+  }, 0);
+
+  return (ganancias.textContent = `$${sumaDeGanancias}`);
+};
+mostrarGanancias(operacionesStored);
+
+// suma gastos 
+const mostrarGastos = (array) => {
+  const filtroGastos = array.filter((elemento) => {
+    return elemento.tipo === "gasto";
+  });
+
+  const sumaDeGastos = filtroGastos.reduce((acc, elemento) => {
+    return acc + elemento.monto;
+    // SOLUCIONAR: me lo concatena, no lo toma como numero
+  }, 0);
+
+  return (gastos.textContent = `$${sumaDeGastos}`);
+};
+mostrarGastos(operacionesStored);
+
+// total
+const mostrarBalanceTotal = (array) => {
+  const totalGanancias = mostrarGanancias(array);
+  const totalGastos = mostrarGastos(array);
+  const totalFinal = totalGanancias - totalGastos;
+  return (balanceTotal.textContent = `$${totalFinal}`);
+}; 
+//SOLUCIONAR: NaN en total 
+
+mostrarBalanceTotal(operacionesStored);
