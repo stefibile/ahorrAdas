@@ -28,7 +28,8 @@
                 <a href="" class="navbar-item">
                     <h1 class="title is-size-2-desktop is-size-3 has-text-white">
                         <i class="fas fa-wallet mr-2" aria-hidden="true"></i>
-                        AhorrAdas</h1>
+                        AhorrAdas
+                    </h1>
                 </a>
 
                 <div class="navbar-burger burger">
@@ -173,7 +174,7 @@
                             </div>
                         </div>
 
-                        <div id="" class="is-hidden">
+                        <div id="add-operations" class="is-hidden">
                             <div class="columns has-text-weight-semibold is-hidden-mobile">
                                 <div class="column is-3">Descripción</div>
                                 <div class="column is-3">Categoría</div>
@@ -182,27 +183,7 @@
                                 <div class="column is-2 has-text-right">Acciones</div>
                             </div>
                             <div id="operations">
-                                <div class="mb-3">
-                                    <div class="columns is-multiline is-mobile is-vcentered">
-                                        <div class="column is-3-tablet is-6-mobile"></div>
-                                        <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
-                                            <span class="tag is-primary is-light">Trabajo</span>
-                                        </div>
 
-                                        <div
-                                            class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet">
-                                            4/9/2021</div>
-                                        <div
-                                            class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success">
-                                            +$4800000</div>
-                                        <div class="column is-2-tablet is-6-mobile has-text-right">
-                                            <p class="is-fullwidth">
-                                                <a href="#" class="mr-3 is-size-7 edit-link">Editar</a>
-                                                <a href="#" class="is-size-7 delete-link">Eliminar</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -286,64 +267,67 @@
                 <div class="column is 8-widescreen is-10-desktop is-offset-2-widescreen is-offset-1-desktop">
                     <div class="box">
                         <h2 class="title is-size-2 has-text-weight-bold"> Nueva operación</h2>
-                        <div class="field mt-6">
-                            <label class="label" for="description-input">Descripción</label>
-                            <div class="control">
-                                <div class="is--fullwidht">
-                                    <input class="input" type="text" name id="description-input">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="field">
-                            <label class="label" for="monto-input">Monto</label>
-                            <div class="control">
+                        <form>
+                            <div class="field mt-6">
+                                <label class="label" for="description-input">Descripción</label>
                                 <div class="control">
-                                    <div class="is-fullwidth">
-                                        <input class="input" type="number" name id="monto-input" value="0">
+                                    <div class="is--fullwidht">
+                                        <input class="input input-element-form" type="text" id="description-input">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="select-type">Tipo</label>
 
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select name="" id="tipo-operacion">
-                                        <option value="gasto">Gasto</option>
-                                        <option value="ganancia">Ganancia</option>
-                                    </select>
+                            <div class="field">
+                                <label class="label" for="monto-input">Monto</label>
+                                <div class="control">
+                                    <div class="control">
+                                        <div class="is-fullwidth">
+                                            <input class="input input-element-form" type="number" id="monto-input"
+                                                value="0">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="categories-select">Categorias</label>
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select class="categories-select" name="" id="categories-select">
-                                        <option value="comida">Comida</option>
-                                        <option value="salidas">Salidas</option>
-                                        <option value="trabajo">Trabajo</option>
-                                        <option value="transporte">Transporte</option>
-                                        <option value="educacion">Educación</option>
-                                        <option value="servicios">Servicios</option>
-                                    </select>
+                            <div class="field">
+                                <label class="label" for="select-type">Tipo</label>
+
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select id="tipo-operacion" class="select-element-form">
+                                            <option value="gasto">Gasto</option>
+                                            <option value="ganancia">Ganancia</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label class="label" for="date-input">Fecha</label>
-                            <div class="control">
-                                <div class="is-fullwidth">
-                                    <input class="input" type="date" name id="date-input">
+                            <div class="field">
+                                <label class="label" for="categories-select">Categorias</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select class="categories-select select-element-form"
+                                            id="categories-select">
+                                            <option value="comida">Comida</option>
+                                            <option value="salidas">Salidas</option>
+                                            <option value="trabajo">Trabajo</option>
+                                            <option value="transporte">Transporte</option>
+                                            <option value="educacion">Educación</option>
+                                            <option value="servicios">Servicios</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="field">
+                                <label class="label" for="date-input">Fecha</label>
+                                <div class="control">
+                                    <div class="is-fullwidth">
+                                        <input class="input input-element-form" type="date" id="date-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <div class="buttons mt-6 is-justify-content-flex-end">
                             <button class="button is-light" id="cancelar-agregar-operaciones-boton"> Cancelar </button>
-                            <button class="button is-success" id="agregar-operaciones-boton"> Agregar </button>
+                            <button type="submit" class="button is-success" id="agregar-operaciones-boton"> Agregar </button>
                         </div>
                     </div>
                 </div>
@@ -353,17 +337,6 @@
 
     </section>
     <!-- FIN SECCION NUEVA OPERACION -->
-
-
-
-
-
-
-
-
-
-
-
 
 
     <script src="index.js"></script>

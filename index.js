@@ -52,6 +52,127 @@ showOperation.onclick = () => {
   hideSection(sectionReports);
 };
 
+//AGREGAR LA OPERACION A LA SECCION BALANCE
+
+const addOperationButton = document.querySelector("#agregar-operaciones-boton");
+const addOperations = document.querySelector("#add-operations");
+const noneOperations = document.querySelector("#none-operations");
+const cancelOperation = document.querySelector(
+  "#cancelar-agregar-operaciones-boton"
+);
+const inputDescription = document.querySelector("#description-input");
+const inputMonto = document.querySelector("#monto-input");
+const inputDate = document.querySelector("#date-input");
+const selectCategories = document.querySelector("#categories-select");
+const selectTypeOperation = document.querySelector("#tipo-operacion");
+
+// Convertir newOperation a un JSON
+const convertirAJSON = (objeto) => {
+  return JSON.stringify(objeto);
+};
+
+// Guardar newOperation en localStorage
+const guardarEnLocalStorage = (objetoJavascript, clave) => {
+  return localStorage.setItem(clave, convertirAJSON(objetoJavascript));
+};
+
+// Leer localStorage
+const leerDesdeLocalStorage = (clave) => {
+  return convertirDesdeJSON(localStorage.getItem(clave));
+};
+
+// Convertirlo a JS
+const convertirDesdeJSON = (objetoJSON) => {
+  return JSON.parse(objetoJSON);
+};
+
+cancelOperation.onclick = () => {
+  sectionBalance.classList.remove("is-hidden");
+  sectionOperation.classList.add("is-hidden");
+};
+
+operaciones = ""
+
+const getOperations = () => {
+  const operationsStored = localStorage.getItem("operaciones");
+  if (operationsStored === null) {
+    return operaciones;
+  } else {
+    noneOperations.classList.add("is-hidden");
+    addOperations.classList.remove("is-hidden");
+    return JSON.parse(operationsStored);
+  }
+};
+
+operacionesStored = getOperations();
+
+const mostrarOperacionesEnHTML = (array) => {
+  const html = array.reduce((acc, e, i) => {
+    return (
+      acc +
+      `<div class="mb-3">
+      <div class="columns is-multiline is-mobile is-vcentered">
+        <div id="description" class="column is-3-tablet is-6-mobile">${e.descripcion}</div>
+          <div class="column is-3-tablet is-6-mobile has-text-right-mobile">
+            <span id="categories" class="tag is-primary is-light">${e.categoria}</span>
+          </div>
+          <div class="column is-2-tablet has-text-grey is-hidden-mobile has-text-right-tablet"
+            id="date">
+            ${e.fecha}</div>
+          <div class="column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile has-text-success"
+            id="monto">
+            ${e.monto}</div>
+          <div class="column is-2-tablet is-6-mobile has-text-right">
+            <p class="is-fullwidth">
+                <a href="#" id="boton-editar-${i}" class="mr-3 is-size-7 edit-link">Editar</a>
+                <a href="#" id="boton-eliminar-${i}" class="is-size-7 delete-link">Eliminar</a>
+            </p>
+          </div>
+        </div>
+      </div>`
+    );
+  }, "");
+  const operations = document.querySelector("#operations");
+  operations.innerHTML = html;
+  // getDeleteButtons(array);
+  // getEditButtons(array);
+};
+
+mostrarOperacionesEnHTML(operacionesStored)
+
+addOperationButton.onclick = () => {
+
+  const newOperation = getOperations();
+
+  sectionOperation.classList.add("is-hidden");
+  sectionBalance.classList.remove("is-hidden");
+  addOperations.classList.remove("is-hidden");
+  noneOperations.classList.add("is-hidden");
+
+  const description = inputDescription.value;
+  const monto = inputMonto.value;
+  const tipo =
+    selectTypeOperation.options[selectTypeOperation.selectedIndex].value;
+  const categoria =
+    selectCategories.options[selectCategories.selectedIndex].value;
+  const fecha = inputDate.value;
+
+  const elementosForm = {
+    descripcion: description,
+    monto: monto,
+    tipo: tipo,
+    categoria: categoria,
+    fecha: fecha,
+  };
+
+  newOperation.push(elementosForm);
+  
+  mostrarOperacionesEnHTML(newOperation);
+
+  const operationsToJSON = JSON.stringify(newOperation);
+  localStorage.setItem("operaciones", operationsToJSON);
+};
+
 // MOSTRAR U OCULTAR FILTROS
 
 const filterLabel = document.querySelector("#filter-label");
@@ -131,7 +252,9 @@ const getEditCategory = (id) => {
 
   const confirmCategoryButton = document.querySelector("#edit-category-button");
   const inputCategory = document.querySelector("#edit-category-input");
-  const cancelCategoryButton = document.querySelector("#cancel-category-button");
+  const cancelCategoryButton = document.querySelector(
+    "#cancel-category-button"
+  );
 
   cancelCategoryButton.onclick = () => {
     showSection(sectionCategories);
@@ -139,7 +262,6 @@ const getEditCategory = (id) => {
   };
 
   confirmCategoryButton.onclick = () => {
-
     const categoryValue = inputCategory.value;
     categories[id] = categoryValue;
 
