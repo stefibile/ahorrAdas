@@ -6,9 +6,7 @@ Ademas, se pueden crear, editar y eliminar operaciones y categorias para que el 
 
 Los datos ingresados quedan guardados en el LocalStorage (Almacenamiento local del navegador) ofreciendo una mejor experiencia ya que los datos solo seran eliminados si el usuario asi lo desea.
 
---- IMAGENES DEL TRABAJO --- 
-
-Podes ver el codigo de nuestro proyecto [aqui](https://github.com/stefibile/ahorrAdas)
+Podes ver el codigo de nuestro proyecto [aqui](https://ahorradasapp.netlify.app/)
 
 ##  Tecnologías utilizadas:
 -	**JavaScript**
