@@ -158,7 +158,7 @@ addOperationButton.onclick = () => {
 
   const elementosForm = {
     descripcion: description,
-    monto: monto,
+    monto: Number(monto),
     tipo: tipo,
     categoria: categoria,
     fecha: fecha,
@@ -355,8 +355,7 @@ const mostrarGanancias = (array) => {
   });
 
   const sumaDeGanancias = filtroGanancias.reduce((acc, elemento) => {
-    return acc + elemento.monto;
-    // SOLUCIONAR: me lo concatena, no lo toma como numero
+    return +acc + +elemento.monto;
   }, 0);
 
   return (ganancias.textContent = `$${sumaDeGanancias}`);
@@ -370,8 +369,7 @@ const mostrarGastos = (array) => {
   });
 
   const sumaDeGastos = filtroGastos.reduce((acc, elemento) => {
-    return acc + elemento.monto;
-    // SOLUCIONAR: me lo concatena, no lo toma como numero
+    return +acc + +elemento.monto;
   }, 0);
 
   return (gastos.textContent = `$${sumaDeGastos}`);
@@ -380,16 +378,19 @@ mostrarGastos(operacionesStored);
 
 // total
 const mostrarBalanceTotal = (array) => {
-  const totalGanancias = mostrarGanancias(array);
-  const totalGastos = mostrarGastos(array);
+  const totalGanancias = mostrarGanancias(array).slice(1);
+  const totalGastos = mostrarGastos(array).slice(1);
   const totalFinal = totalGanancias - totalGastos;
   return (balanceTotal.textContent = `$${totalFinal}`);
 };
-//SOLUCIONAR: NaN en total
 
 mostrarBalanceTotal(operacionesStored);
 
 // FILTROS
+const filtrosOrdenarPor = document.querySelector("#order-filter");
+const tipoFiltro = document.querySelector("#type-filter");
+const categoriaFiltro = document.querySelector("#filter-category");
+const fechaFiltro = document.querySelector("#date-filter");
 
 const ordenarPorFechaMasReciente = (array) => {
   return array.sort((a, b) => {
@@ -423,30 +424,25 @@ const ordenarZA = (array) => {
 };
 
 const filtroOrdenarPor = (array) => {
-  if (filtrosOrdenarPor.value === "MAS-RECIENTES") {
+  if (filtrosOrdenarPor.value === "mas-recientes") {
     return ordenarPorFechaMasReciente(array);
-  } else if (selectfiltrosOrdenarPor === "MENOS-RECIENTES") {
+  } else if (filtrosOrdenarPor === "menos-recientes") {
     return ordenarPorFechaMenosReciente(array);
-  } else if (selectfiltrosOrdenarPor === "MAYOR-MONTO") {
+  } else if (filtrosOrdenarPor === "mayor-monto") {
     return ordenarPorMayorMonto(array);
-  } else if (selectfiltrosOrdenarPor === "MENOR-MONTO") {
+  } else if (filtrosOrdenarPor === "menor-monto") {
     return ordenarPorMenorMonto(array);
-  } else if (selectfiltrosOrdenarPor === "A/Z") {
+  } else if (filtrosOrdenarPor === "a-z") {
     return ordenarAZ(array);
   } else {
     return ordenarZA(array);
   }
 };
 
-const filtrosOrdenarPor = document.querySelector("#order-filter");
-const tipoFiltro = document.querySelector("#type-filter");
-const categoriaFiltro = document.querySelector("#filter-category");
-const fechaFiltro = document.querySelector("#date-filter");
-
 const aplicarFiltros = () => {
   const filtroTipo = tipoFiltro.value;
   const filtroPorTipo = operacionesStored.filter((operacion) => {
-    if (filtroTipo === "TODOS") {
+    if (filtroTipo === "todos") {
       return operacion;
     }
     return operacion.tipo === filtroTipo;
@@ -454,10 +450,10 @@ const aplicarFiltros = () => {
 
   const filtroCategoria = categoriaFiltro.value;
   const filtrarPorCategoria = filtroPorTipo.filter((operacion) => {
-    if (filtroCategoria === "TODAS") {
+    if (filtroCategoria === "todas") {
       return operacion;
     }
-    return operacion.categoria === FiltroCategoria;
+    return operacion.categoria === filtroCategoria;
   });
 
   const arrayFiltrarPorFechas = filtrarPorCategoria.map((operacion) => {
@@ -487,5 +483,3 @@ filtrosOrdenarPor.onchange = () => {
   const filtrarArray = aplicarFiltros();
   mostrarOperacionesEnHTML(filtrarArray);
 };
-
-// NO ME FUNCIONA :( 
