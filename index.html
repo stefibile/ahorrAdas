@@ -69,7 +69,7 @@
                                 <p class="is-size-5 my-5">Ganancias</p>
                             </div>
                             <div class="column is-8 has-text-right">
-                                <p class="has-text-right has-text-success">0</p>
+                                <p class="has-text-right has-text-success" id="ganancias"></p>
                             </div>
 
                         </div>
@@ -78,7 +78,7 @@
                                 <p class="is-size-5 my-5">Gastos</p>
                             </div>
                             <div class="column is-8 has-text-right">
-                                <p class="has-text-right has-text-danger">0</p>
+                                <p class="has-text-right has-text-danger" id="gastos"></p>
                             </div>
 
                         </div>
@@ -87,7 +87,7 @@
                                 <p class="is-size-4 my-5">Total</p>
                             </div>
                             <div class="column is-8 has-text-right">
-                                <p class="has-text-right has-text-weight-bold">0</p>
+                                <p class="has-text-right has-text-weight-bold" id="balance-total">0</p>
                             </div>
 
                         </div>
@@ -108,9 +108,9 @@
                                 <div class="control">
                                     <div class="select is-fullwidth">
                                         <select id="type-filter">
-                                            <option value="TODOS">Todos</option>
-                                            <option value="GASTO">Gasto</option>
-                                            <option value="GANANCIA">Ganancia</option>
+                                            <option value="todos">Todos</option>
+                                            <option value="gasto">Gasto</option>
+                                            <option value="ganancia">Ganancia</option>
                                         </select>
                                     </div>
                                 </div>
@@ -121,13 +121,13 @@
                                 <div class="control">
                                     <div class="select is-fullwidth">
                                         <select class="category-filter categories-selecy" id="filter-category">
-                                            <option value="TODAS">Todas</option>
-                                            <option value="COMIDA">Comida</option>
-                                            <option value="SERVICIOS">Servicios</option>
-                                            <option value="SALIDAS">Salidas</option>
-                                            <option value="EDUCACIÓN">Educación</option>
-                                            <option value="TRANSPORTE">Transporte</option>
-                                            <option value="TRABAJO">Trabajo</option>
+                                            <option value="todas">Todas</option>
+                                            <option value="comida">Comida</option>
+                                            <option value="servicios">Servicios</option>
+                                            <option value="salidas">Salidas</option>
+                                            <option value="educacion">Educación</option>
+                                            <option value="transporte">Transporte</option>
+                                            <option value="trabajo">Trabajo</option>
                                         </select>
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                                 <label class="label" for="caterogy-filter">Desde</label>
                                 <div class="control">
                                     <div class="is-fullwidth">
-                                        <input class="input" type="date" name id="date-filter">
+                                        <input class="input" type="date" id="date-filter">
                                     </div>
                                 </div>
                             </div>
@@ -149,12 +149,12 @@
                                 <div class="control">
                                     <div class="select is-fullwidth">
                                         <select id="order-filter">
-                                            <option value="MAS-RECIENTES">Más recientes</option>
-                                            <option value="MENOS-RECIENTES">Menos recientes</option>
-                                            <option value="MAYOR-MONTO">Mayor monto</option>
-                                            <option value="MENOR-MONTO">Menor monto</option>
-                                            <option value="A/Z">A/Z</option>
-                                            <option value="Z/A">Z/A</option>
+                                            <option value="mas-recientes">Más recientes</option>
+                                            <option value="menos-recientes">Menos recientes</option>
+                                            <option value="mayor-monto">Mayor monto</option>
+                                            <option value="menor-monto">Menor monto</option>
+                                            <option value="a-z">A/Z</option>
+                                            <option value="z-a">Z/A</option>
                                         </select>
                                     </div>
                                 </div>
@@ -215,7 +215,7 @@
                         <label class="label mt-6" for="category-input">Nombre</label>
                         <div class="field is-grouped">
                             <div class="control is-expanded">
-                                <input class="input" type="text" name id="category-input">
+                                <input class="input" type="text" id="category-input">
                             </div>
                             <div class="control">
                                 <button class="button is-success" id="add-category-button">Agregar</button>

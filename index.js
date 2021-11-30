@@ -91,7 +91,7 @@ cancelOperation.onclick = () => {
   sectionOperation.classList.add("is-hidden");
 };
 
-operaciones = ""
+operaciones = [];
 
 const getOperations = () => {
   const operationsStored = localStorage.getItem("operaciones");
@@ -138,10 +138,9 @@ const mostrarOperacionesEnHTML = (array) => {
   // getEditButtons(array);
 };
 
-mostrarOperacionesEnHTML(operacionesStored)
+mostrarOperacionesEnHTML(operacionesStored);
 
 addOperationButton.onclick = () => {
-
   const newOperation = getOperations();
 
   sectionOperation.classList.add("is-hidden");
@@ -159,14 +158,14 @@ addOperationButton.onclick = () => {
 
   const elementosForm = {
     descripcion: description,
-    monto: monto,
+    monto: Number(monto),
     tipo: tipo,
     categoria: categoria,
     fecha: fecha,
   };
 
   newOperation.push(elementosForm);
-  
+
   mostrarOperacionesEnHTML(newOperation);
 
   const operationsToJSON = JSON.stringify(newOperation);
@@ -342,3 +341,145 @@ addCategoryButton.onclick = () => {
 };
 
 addCategoriesToHTML(getCategories(categories));
+
+// BALANCE
+
+const ganancias = document.querySelector("#ganancias");
+const gastos = document.querySelector("#gastos");
+const balanceTotal = document.querySelector("#balance-total");
+
+// suma ganancias
+const mostrarGanancias = (array) => {
+  const filtroGanancias = array.filter((elemento) => {
+    return elemento.tipo === "ganancia";
+  });
+
+  const sumaDeGanancias = filtroGanancias.reduce((acc, elemento) => {
+    return +acc + +elemento.monto;
+  }, 0);
+
+  return (ganancias.textContent = `$${sumaDeGanancias}`);
+};
+mostrarGanancias(operacionesStored);
+
+// suma gastos
+const mostrarGastos = (array) => {
+  const filtroGastos = array.filter((elemento) => {
+    return elemento.tipo === "gasto";
+  });
+
+  const sumaDeGastos = filtroGastos.reduce((acc, elemento) => {
+    return +acc + +elemento.monto;
+  }, 0);
+
+  return (gastos.textContent = `$${sumaDeGastos}`);
+};
+mostrarGastos(operacionesStored);
+
+// total
+const mostrarBalanceTotal = (array) => {
+  const totalGanancias = mostrarGanancias(array).slice(1);
+  const totalGastos = mostrarGastos(array).slice(1);
+  const totalFinal = totalGanancias - totalGastos;
+  return (balanceTotal.textContent = `$${totalFinal}`);
+};
+
+mostrarBalanceTotal(operacionesStored);
+
+// FILTROS
+const filtrosOrdenarPor = document.querySelector("#order-filter");
+const tipoFiltro = document.querySelector("#type-filter");
+const categoriaFiltro = document.querySelector("#filter-category");
+const fechaFiltro = document.querySelector("#date-filter");
+
+const ordenarPorFechaMasReciente = (array) => {
+  return array.sort((a, b) => {
+    return new Date(a.fecha) - new Date(b.fecha);
+  });
+};
+
+const ordenarPorFechaMenosReciente = (array) => {
+  return array.sort((a, b) => {
+    return new Date(b.fecha) - new Date(a.fecha);
+  });
+};
+const ordenarPorMayorMonto = (array) => {
+  return array.sort((a, b) => {
+    return a.monto - b.monto;
+  });
+};
+
+const ordenarPorMenorMonto = (array) => {
+  return array.sort((a, b) => {
+    return b.monto - a.monto;
+  });
+};
+
+const ordenarAZ = (array) => {
+  return array.sort();
+};
+
+const ordenarZA = (array) => {
+  return array.sort().reverse();
+};
+
+const filtroOrdenarPor = (array) => {
+  if (filtrosOrdenarPor.value === "mas-recientes") {
+    return ordenarPorFechaMasReciente(array);
+  } else if (filtrosOrdenarPor === "menos-recientes") {
+    return ordenarPorFechaMenosReciente(array);
+  } else if (filtrosOrdenarPor === "mayor-monto") {
+    return ordenarPorMayorMonto(array);
+  } else if (filtrosOrdenarPor === "menor-monto") {
+    return ordenarPorMenorMonto(array);
+  } else if (filtrosOrdenarPor === "a-z") {
+    return ordenarAZ(array);
+  } else {
+    return ordenarZA(array);
+  }
+};
+
+const aplicarFiltros = () => {
+  const filtroTipo = tipoFiltro.value;
+  const filtroPorTipo = operacionesStored.filter((operacion) => {
+    if (filtroTipo === "todos") {
+      return operacion;
+    }
+    return operacion.tipo === filtroTipo;
+  });
+
+  const filtroCategoria = categoriaFiltro.value;
+  const filtrarPorCategoria = filtroPorTipo.filter((operacion) => {
+    if (filtroCategoria === "todas") {
+      return operacion;
+    }
+    return operacion.categoria === filtroCategoria;
+  });
+
+  const arrayFiltrarPorFechas = filtrarPorCategoria.map((operacion) => {
+    const newElement = { ...operacion };
+    newElement.fecha = new Date(operacion.fecha).toLocaleDateString();
+    return newElement;
+  });
+  return filtroOrdenarPor(arrayFiltrarPorFechas);
+};
+
+tipoFiltro.onchange = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
+
+categoriaFiltro.onchange = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
+
+fechaFiltro.oninput = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
+
+filtrosOrdenarPor.onchange = () => {
+  const filtrarArray = aplicarFiltros();
+  mostrarOperacionesEnHTML(filtrarArray);
+};
