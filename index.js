@@ -72,11 +72,13 @@ const convertirAJSON = (objeto) => {
 };
 
 // Guardar newOperation en localStorage
+// nunca usas esta funcion
 const guardarEnLocalStorage = (objetoJavascript, clave) => {
   return localStorage.setItem(clave, convertirAJSON(objetoJavascript));
 };
 
 // Leer localStorage
+// nunca usas esta funcion 
 const leerDesdeLocalStorage = (clave) => {
   return convertirDesdeJSON(localStorage.getItem(clave));
 };
@@ -91,6 +93,7 @@ cancelOperation.onclick = () => {
   sectionOperation.classList.add("is-hidden");
 };
 
+// falta un const o let aca
 operaciones = [];
 
 const getOperations = () => {
@@ -104,6 +107,8 @@ const getOperations = () => {
   }
 };
 
+// es muy confuso que ejecutes tu codigo en el medio de las funciones auxiliares - pone todas las ejecuciones al final
+// falta un const o let
 operacionesStored = getOperations();
 
 const mostrarOperacionesEnHTML = (array) => {
@@ -134,6 +139,7 @@ const mostrarOperacionesEnHTML = (array) => {
   }, "");
   const operations = document.querySelector("#operations");
   operations.innerHTML = html;
+  // no dejes codigo comentado en una entrega
   // getDeleteButtons(array);
   // getEditButtons(array);
 };
@@ -279,6 +285,7 @@ const getEditButtons = () => {
     editCategoryButtons[i].onclick = () => {
       const idSliced = editCategoryButtons[i].id.slice(5);
       idButton = Number(idSliced);
+      // falta const o let
       getEditCategory(idButton);
     };
   }
@@ -289,6 +296,7 @@ const getDeleteButtons = (array) => {
   for (let i = 0; i < deleteCategoryButtons.length; i++) {
     deleteCategoryButtons[i].onclick = () => {
       const idSliced = deleteCategoryButtons[i].id.slice(7);
+      // falta const o let
       idButton = Number(idSliced);
       const filteredArray = array.filter((elemento, index) => {
         return index !== idButton;
@@ -355,6 +363,7 @@ const mostrarGanancias = (array) => {
   });
 
   const sumaDeGanancias = filtroGanancias.reduce((acc, elemento) => {
+    // no entiendo que trataste de hacer aca con los signos +
     return +acc + +elemento.monto;
   }, 0);
 
@@ -369,6 +378,7 @@ const mostrarGastos = (array) => {
   });
 
   const sumaDeGastos = filtroGastos.reduce((acc, elemento) => {
+    // no entiendo los signos + acá
     return +acc + +elemento.monto;
   }, 0);
 
@@ -423,6 +433,7 @@ const ordenarZA = (array) => {
   return array.sort().reverse();
 };
 
+// esto esta demasiado parecido al modelo de ada
 const filtroOrdenarPor = (array) => {
   if (filtrosOrdenarPor.value === "mas-recientes") {
     return ordenarPorFechaMasReciente(array);
@@ -458,6 +469,7 @@ const aplicarFiltros = () => {
 
   const arrayFiltrarPorFechas = filtrarPorCategoria.map((operacion) => {
     const newElement = { ...operacion };
+    // aca estas asignando una nueva fecha, no filtrando
     newElement.fecha = new Date(operacion.fecha).toLocaleDateString();
     return newElement;
   });
